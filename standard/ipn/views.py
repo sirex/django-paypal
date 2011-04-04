@@ -1,6 +1,5 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
-import codecs
 from django.http import HttpResponse
 from django.views.decorators.http import require_POST
 from paypal.standard.ipn.forms import PayPalIPNForm
@@ -19,14 +18,6 @@ def ipn(request, item_check_callable=None):
     """
     flag = None
     ipn_obj = None
-
-    encoding = request.POST.get('charset', '')
-    try:
-        codecs.getdecoder(encoding) # check if the codec exists
-        request.encoding = encoding
-    except LookupError:
-        pass
-
 
     form = PayPalIPNForm(request.POST)
     if form.is_valid():
